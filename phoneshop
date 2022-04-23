@@ -1,0 +1,721 @@
+#include <iostream>
+using namespace std;
+enum Os
+{
+    ios_apple,
+    android,
+    windows_phone
+};
+enum Ram
+{
+    R2GB,
+    R4GB,
+    R6GB,
+    R8GB,
+    R12GB,
+    R16GB,
+    R32GB,
+    R64GB
+};
+enum Storage
+{
+    S16GB,
+    S32GB,
+    S64GB,
+    S128GB,
+    S256GB,
+    S512GB,
+    S1TB,
+    S2TB
+};
+enum Color
+{
+    white,
+    black
+};
+
+struct mobile
+{
+    string name;
+    string company;
+    Os os;
+    Ram ram;
+    Storage storage;
+    Color color;
+    long long price;
+    int numphone = 0;
+    int numphonesold = 0;
+};
+void addphone(mobile *&, int &);
+void addsize(mobile *&, int &);
+void removephone(mobile *&, int &);
+void removephone2(mobile *&, int &);
+void showall(mobile *, int &);
+void sellphone(mobile *&, int &);
+void search(mobile *&, int &);
+void changeinfo(mobile *&, int& );
+void sortprice(mobile *&, int&); 
+void swap(mobile *& info, int a, int i) 
+{ 
+    mobile *ptr = new mobile[0];
+	ptr[0] = info[i]; 
+    info[i] = info[i+1]; 
+    info[i+1] = ptr[0]; 
+} 
+int main()
+{
+    int a = 0, c = 0;
+    mobile *info;
+    while (c != 9)
+    {
+        system("color 74");
+        system("cls");
+        cout << "1-add phone.\n"
+             << "2-remove a phone.\n"
+             << "3-sort phones by price\n"
+             << "4-search a phone.\n"
+             << "5-change mobile info\n"
+             << "6-sell a phone\n"
+             << "7-print phones\n"
+             << "8-Print phones sorted by the most sold to the least\n"
+             << "9-quit\n"
+             << endl;
+        cin >> c;
+        if (c == 1)
+        {
+            addphone(info, a);
+        }
+        else if (c == 2)
+        {
+            removephone(info, a);
+        }
+        else if (c==3){
+        	sortprice(info,a);
+		}
+        else if (c == 4)
+        {
+        	search(info,a);
+        }
+        else if (c == 5)
+        {
+        	changeinfo(info, a);
+        }
+        else if (c == 6)
+        {
+        	sellphone(info, a);
+        }
+        else if (c == 7)
+        {
+            showall(info, a);
+        }
+        else if (c == 8)
+        {
+        }
+    }
+
+    return 0;
+}
+
+void addphone(mobile *&info, int &a)
+{
+    // cout<<"size="<<a<<endl;
+    string name, company;
+    int flag1, flag2, flag3, flag4;
+    cout << "Enter your phones name: " << endl;
+    cin >> name;
+    cout << "Enter your phones companys name: " << endl;
+    cin >> company;
+    bool check = true;
+    for (int j = 0; j < a; j++)
+    {
+
+        if (info[j].name == name && info[j].company == company)
+        {
+            check = false;
+            int b;
+            cout << "This phone already exist.\n"
+                 << "How many phone you want to add?" << endl;
+            cin >> b;
+            info[j].numphone = info[j].numphone+b;
+        }
+    }
+    if (check == true)
+    {
+        addsize(info, a);
+        cout<<"What is your phones price?"<<endl;
+        cin>>info[a-1].price;
+        cout << "1-IOS\n"
+             << "2-ANDROID\n"
+             << "3-WINDOWS PHONE\n";
+        cin >> flag1;
+        info[a - 1].name = name;
+        info[a - 1].company = company;
+        if (flag1 == 1)
+        {
+            info[a - 1].os = Os::ios_apple;
+        }
+        else if (flag1 == 2)
+        {
+            info[a - 1].os = Os::android;
+        }
+        else if (flag1 == 3)
+        {
+            info[a - 1].os = Os::windows_phone;
+        }
+        cout << "Enter your phones Ram: " << endl;
+        cout << "1-2Gb\n"
+             << "2-4GB\n"
+             << "3-6GB\n"
+             << "4-8GB\n"
+             << "5-12GB\n"
+             << "6-16GB\n"
+             << "7-32GB\n"
+             << "8-64GB" << endl;
+
+        cin >> flag2;
+        if (flag2 == 1)
+        {
+            info[a - 1].ram = Ram::R2GB;
+        }
+        else if (flag2 == 2)
+        {
+            info[a - 1].ram = Ram::R4GB;
+        }
+        else if (flag2 == 3)
+        {
+            info[a - 1].ram = Ram::R6GB;
+        }
+        else if (flag2 == 4)
+        {
+            info[a - 1].ram = Ram::R8GB;
+        }
+        else if (flag2 == 5)
+        {
+            info[a - 1].ram = Ram::R12GB;
+        }
+        else if (flag2 == 6)
+        {
+            info[a - 1].ram = Ram::R16GB;
+        }
+        else if (flag2 == 7)
+        {
+            info[a - 1].ram = Ram::R32GB;
+        }
+        else if (flag2 == 8)
+        {
+            info[a - 1].ram = Ram::R64GB;
+        }
+        cout << "Enter your phones Storagre: " << endl;
+        cout << "1-16GB\n"
+             << "2-32GB\n"
+             << "3-64GB\n"
+             << "4-128GB\n"
+             << "5-256GB\n"
+             << "6-512GB\n"
+             << "7-1TB\n"
+             << "8-2TB" << endl;
+        cin >> flag3;
+        if (flag3 == 1)
+        {
+            info[a - 1].storage = Storage::S16GB;
+        }
+        else if (flag3 == 2)
+        {
+            info[a - 1].storage = Storage::S32GB;
+        }
+        else if (flag3 == 3)
+        {
+            info[a - 1].storage = Storage::S64GB;
+        }
+        else if (flag3 == 4)
+        {
+            info[a - 1].storage = Storage::S128GB;
+        }
+        else if (flag3 == 5)
+        {
+            info[a - 1].storage = Storage::S256GB;
+        }
+        else if (flag3 == 6)
+        {
+            info[a - 1].storage = Storage::S512GB;
+        }
+        else if (flag3 == 7)
+        {
+            info[a - 1].storage = Storage::S1TB;
+        }
+        else if (flag3 == 8)
+        {
+            info[a - 1].storage = Storage::S2TB;
+        }
+        cout << "Enter your phones color: " << endl;
+        cout << "1-White\n"
+             << "2-black" << endl;
+        cin >> flag4;
+        if (flag4 == 1)
+        {
+            info[a - 1].color = Color::white;
+        }
+        else if (flag4 == 2)
+        {
+            info[a - 1].color = Color::black;
+        }
+        info[a - 1].numphone++;
+    }
+}
+
+void addsize(mobile *&info, int &a)
+{
+    mobile *ptr = new mobile[a + 1];
+    for (int i = 0; i < a; i++)
+    {
+        ptr[i] = info[i];
+    }
+    if (a != 0)
+    {
+        delete[] info;
+    }
+    info = new mobile[a + 1];
+    for (int j = 0; j < a + 1; j++)
+    {
+        info[j] = ptr[j];
+    }
+    delete[] ptr;
+    a++;
+}
+void removephone(mobile *&info, int &a)
+{
+    string name;
+    string company;
+    int flag1 = 0;
+    cout << "Enter the phone you want to delete: ";
+    cin >> name;
+    cout << "Enter the phones company that you want to delete: ";
+    cin >> company;
+    for (int i = 0; i < a; i++)
+    {
+        if (name == info[i].name && company == info[i].company)
+        {
+            flag1 = 1;
+            for (int j = i; j < a - 1; j++)
+            {
+                info[j] = info[j + 1];
+            }
+            removephone2(info, a);
+        }
+    }
+    //cout << "aaa" << endl;
+
+    if (flag1 == 1)
+    {
+        cout << "succesfully deleted" << endl;
+    }
+
+    else if (flag1 == 0)
+    {
+        cout << "mobile not found." << endl;
+    }
+    system("pause");
+}
+void removephone2(mobile *&info, int &a)
+{
+    mobile *array = new mobile[a - 1];
+    for (int k = 0; k < a - 1; k++)
+    {
+        array[k] = info[k];
+    }
+    delete[] info;
+    info = new mobile[a - 1];
+    for (int k = 0; k < a - 1; k++)
+    {
+        info[k] = array[k];
+    }
+    delete[] array;
+    a--;
+}
+void showall(mobile *info, int &a)
+{
+    
+    for (int i = 0; i < a; i++)
+    {
+    	cout<<"--------------------------\n";
+        cout << "Phones name: " << info[i].name << endl;
+        cout << "Phones companys name: " << info[i].company << endl;
+        cout << "Phones price is : "<<info[i].price<<endl;
+        cout << "Phones OS: ";
+
+        if (info[i].os == Os::ios_apple)
+        {
+            cout << "IOS" << endl;
+        }
+        else if (info[i].os == Os::android)
+        {
+            cout << "Android" << endl;
+        }
+        else if (info[i].os == Os::windows_phone)
+        {
+            cout << "Windows phone" << endl;
+        }
+        else
+        {
+            cout << "yor choice is incorect\n";
+        }
+        /*
+         R2GB,
+    R4GB,
+    R6GB,
+    R8GB,
+    R12GB,
+    R16GB,
+    R32GB,
+    R64GB*/
+        cout<<"Ram: ";
+		if( info[i].ram == Ram :: R2GB){
+			cout<<"2GB"<<endl;
+		}
+		else if(info[i].ram == Ram :: R4GB){
+			cout<<"4GB"<<endl;
+		}
+		else if(info[i].ram == Ram :: R6GB){
+			cout<<"6GB"<<endl;
+		}
+		else if(info[i].ram == Ram :: R8GB){
+			cout<<"8GB"<<endl;
+	    }
+	    else if(info[i].ram == Ram :: R12GB){
+	    	cout<<"12GB"<<endl;
+		}
+		else if(info[i].ram == Ram :: R16GB){
+			cout<<"16GB"<<endl;
+		}
+		else if (info[i].ram == Ram :: R32GB){
+			cout<<"32GB"<<endl;
+		}
+		else if (info[i].ram == Ram :: R64GB){
+			cout<<"64GB"<<endl;
+		}
+		cout<<"Storage: ";
+		if(info[i].storage == Storage :: S16GB){
+			cout<<"16GB"<<endl;
+		}
+		else if(info[i].storage == Storage :: S32GB){
+			cout<<"32GB"<<endl;
+		}
+		else if(info[i].storage == Storage :: S64GB){
+			cout<<"64GB"<<endl;
+		}
+		else if(info[i].storage == Storage :: S128GB){
+			cout<<"128GB"<<endl;
+		}
+		else if(info[i].storage == Storage :: S256GB){
+			cout<<"256GB"<<endl;
+		}
+		else if(info[i].storage == Storage :: S512GB){
+			cout<<"512GB"<<endl;
+		}
+		else if(info[i].storage == Storage :: S1TB){
+			cout<<"1TB";
+		}
+		else if(info[i].storage == Storage :: S2TB){
+			cout<<"2TB"<<endl;
+		}
+		
+		/*    S16GB,
+    S32GB,
+    S64GB,
+    S128GB,
+    S256GB,
+    S512GB,
+    S1TB,
+    S2TB*/
+        cout<<"Color: ";
+        if(info[i].color == Color :: white){
+        	cout<<"White"<<endl;
+		}
+		else if(info[i].color == Color :: black){
+			cout<<"Black"<<endl;
+		}
+		cout<<"Num phone we have: "<<info[i].numphone<<endl;
+		cout<<"Num phone we sold: "<<info[i].numphonesold<<endl;	
+	    cout<<"--------------------------\n";
+    }
+    system("pause");
+}
+void sellphone(mobile *& info, int & a){
+	string name,company;
+	cout<<"What is your phones name? \n";
+	cin>>name;
+	cout<<"What is your phones company name\n";
+	cin>>company;
+	for(int i=0;i<a;i++){
+		if(name==info[i].name && company==info[i].company){
+			info[i].numphone--;
+			info[i].numphonesold++;
+			cout<<"succesfully sold"<<endl;
+		}
+		else{
+		cout<<"Not found"<<endl;
+		}
+    }
+		system("pause");
+}
+void search(mobile *& info, int & a){
+	string name,company;
+	cout<<"What is phones name: "<<endl;
+	cin>>name;
+	cout<<"what is companys name: "<<endl;
+	cin>>company;
+	for(int i=0;i<a;i++){
+		if(name==info[i].name && company==info[i].company){
+				cout<<"--------------------------\n";
+        cout << "Phones name: " << info[i].name << endl;
+        cout << "Phones companys name: " << info[i].company << endl;
+        cout << "Phones price is : "<<info[i].price<<endl;
+        cout << "Phones OS: ";
+
+        if (info[i].os == Os::ios_apple)
+        {
+            cout << "IOS" << endl;
+        }
+        else if (info[i].os == Os::android)
+        {
+            cout << "Android" << endl;
+        }
+        else if (info[i].os == Os::windows_phone)
+        {
+            cout << "Windows phone" << endl;
+        }
+        else
+        {
+            cout << "yor choice is incorect\n";
+        }
+        /*
+         R2GB,
+    R4GB,
+    R6GB,
+    R8GB,
+    R12GB,
+    R16GB,
+    R32GB,
+    R64GB*/
+        cout<<"Ram: ";
+		if( info[i].ram == Ram :: R2GB){
+			cout<<"2GB"<<endl;
+		}
+		else if(info[i].ram == Ram :: R4GB){
+			cout<<"4GB"<<endl;
+		}
+		else if(info[i].ram == Ram :: R6GB){
+			cout<<"6GB"<<endl;
+		}
+		else if(info[i].ram == Ram :: R8GB){
+			cout<<"8GB"<<endl;
+	    }
+	    else if(info[i].ram == Ram :: R12GB){
+	    	cout<<"12GB"<<endl;
+		}
+		else if(info[i].ram == Ram :: R16GB){
+			cout<<"16GB"<<endl;
+		}
+		else if (info[i].ram == Ram :: R32GB){
+			cout<<"32GB"<<endl;
+		}
+		else if (info[i].ram == Ram :: R64GB){
+			cout<<"64GB"<<endl;
+		}
+		cout<<"Storage: ";
+		if(info[i].storage == Storage :: S16GB){
+			cout<<"16GB"<<endl;
+		}
+		else if(info[i].storage == Storage :: S32GB){
+			cout<<"32GB"<<endl;
+		}
+		else if(info[i].storage == Storage :: S64GB){
+			cout<<"64GB"<<endl;
+		}
+		else if(info[i].storage == Storage :: S128GB){
+			cout<<"128GB"<<endl;
+		}
+		else if(info[i].storage == Storage :: S256GB){
+			cout<<"256GB"<<endl;
+		}
+		else if(info[i].storage == Storage :: S512GB){
+			cout<<"512GB"<<endl;
+		}
+		else if(info[i].storage == Storage :: S1TB){
+			cout<<"1TB";
+		}
+		else if(info[i].storage == Storage :: S2TB){
+			cout<<"2TB"<<endl;
+		}
+		
+		/*    S16GB,
+    S32GB,
+    S64GB,
+    S128GB,
+    S256GB,
+    S512GB,
+    S1TB,
+    S2TB*/
+        cout<<"Color: ";
+        if(info[i].color == Color :: white){
+        	cout<<"White"<<endl;
+		}
+		else if(info[i].color == Color :: black){
+			cout<<"Black"<<endl;
+		}
+		cout<<"Num phone we have: "<<info[i].numphone<<endl;
+		cout<<"Num phone we sold: "<<info[i].numphonesold<<endl;	
+	    cout<<"--------------------------\n";
+    }
+        else{
+        	cout<<"Not found\n";
+		}
+	system("pause");
+		}
+	}
+void changeinfo(mobile *& info, int & a){
+	int flag1,flag2,flag3,flag4;
+	string name,company;
+	cout<<"What is your phones name: \n";
+	cin>>name;
+	cout<<"What is your companys name: \n";
+	cin>>company;
+	for(int i=0;i<a;i++){
+	if(name==info[i].name && info[i].company==company){
+		cout<<"What is your phones price?"<<endl;
+        cin>>info[i].price;
+        cout << "1-IOS\n"
+             << "2-ANDROID\n"
+             << "3-WINDOWS PHONE\n";
+        cin >> flag1;
+        info[i].name = name;
+        info[i].company = company;
+        if (flag1 == 1)
+        {
+            info[i].os = Os::ios_apple;
+        }
+        else if (flag1 == 2)
+        {
+            info[i].os = Os::android;
+        }
+        else if (flag1 == 3)
+        {
+            info[i].os = Os::windows_phone;
+        }
+        cout << "Enter your phones Ram: " << endl;
+        cout << "1-2Gb\n"
+             << "2-4GB\n"
+             << "3-6GB\n"
+             << "4-8GB\n"
+             << "5-12GB\n"
+             << "6-16GB\n"
+             << "7-32GB\n"
+             << "8-64GB" << endl;
+
+        cin >> flag2;
+        if (flag2 == 1)
+        {
+            info[i].ram = Ram::R2GB;
+        }
+        else if (flag2 == 2)
+        {
+            info[i].ram = Ram::R4GB;
+        }
+        else if (flag2 == 3)
+        {
+            info[i].ram = Ram::R6GB;
+        }
+        else if (flag2 == 4)
+        {
+            info[i].ram = Ram::R8GB;
+        }
+        else if (flag2 == 5)
+        {
+            info[i].ram = Ram::R12GB;
+        }
+        else if (flag2 == 6)
+        {
+            info[i].ram = Ram::R16GB;
+        }
+        else if (flag2 == 7)
+        {
+            info[i].ram = Ram::R32GB;
+        }
+        else if (flag2 == 8)
+        {
+            info[i].ram = Ram::R64GB;
+        }
+        cout << "Enter your phones Storagre: " << endl;
+        cout << "1-16GB\n"
+             << "2-32GB\n"
+             << "3-64GB\n"
+             << "4-128GB\n"
+             << "5-256GB\n"
+             << "6-512GB\n"
+             << "7-1TB\n"
+             << "8-2TB" << endl;
+        cin >> flag3;
+        if (flag3 == 1)
+        {
+            info[i].storage = Storage::S16GB;
+        }
+        else if (flag3 == 2)
+        {
+            info[i].storage = Storage::S32GB;
+        }
+        else if (flag3 == 3)
+        {
+            info[i].storage = Storage::S64GB;
+        }
+        else if (flag3 == 4)
+        {
+            info[i].storage = Storage::S128GB;
+        }
+        else if (flag3 == 5)
+        {
+            info[i].storage = Storage::S256GB;
+        }
+        else if (flag3 == 6)
+        {
+            info[i].storage = Storage::S512GB;
+        }
+        else if (flag3 == 7)
+        {
+            info[i].storage = Storage::S1TB;
+        }
+        else if (flag3 == 8)
+        {
+            info[i].storage = Storage::S2TB;
+        }
+        cout << "Enter your phones color: " << endl;
+        cout << "1-White\n"
+             << "2-black" << endl;
+        cin >> flag4;
+        if (flag4 == 1)
+        {
+            info[i].color = Color::white;
+        }
+        else if (flag4 == 2)
+        {
+            info[i].color = Color::black;
+        }
+	}
+	else{
+		cout<<"Not found\n";
+	}
+}
+	system("pause");
+}	
+void sortprice(mobile *& info, int& a){
+
+    for (int i = 0; i < a; i++)  {    
+        for (int j = 0; j < a-i; j++){
+            if (info[j].price > info[j+1].price) 
+            swap(info,a,j); 
+        } 
+    }
+
+ 
+ showall(info , a);
+ system("pause");
+} 
